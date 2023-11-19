@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./Checkout.css";
 import checkoutBanner from "../images/checkout_banner.svg";
 import Subtotal from './Subtotal';
 import CheckoutProduct from './CheckoutProduct';
 import { useStateValue } from './StateProvider';
+import FlipMove from 'react-flip-move';
 
 function Checkout() {
 
-    const [{ basket }, dispatch] = useStateValue();
+    const [{ user, basket }, dispatch] = useStateValue();
 
     console.log(basket)
 
@@ -18,10 +19,13 @@ function Checkout() {
                 <img className='checkout__ad' src={checkoutBanner} alt="" />
 
                 <div>
+                    <h3>{user ? `Hello, ${user?.email}` : "Hello Guest"}</h3>
                     <h1 className="checkout__title">Your shopping Basket</h1>
-                    {basket.map(item => (
-                        <CheckoutProduct id={item.id} image={item.image} title={item.title} price={item.price} rating={item.rating} />
+                    {/* <FlipMove> */}
+                    {basket.map((item, index) => (
+                        <CheckoutProduct id={item.id} key={index} image={item.image} title={item.title} price={item.price} rating={item.rating} />
                     ))}
+                    {/* </FlipMove> */}
                 </div>
             </div>
             <div className="checkout__right">
