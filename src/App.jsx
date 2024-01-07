@@ -7,6 +7,12 @@ import Login from './components/Login';
 import { useEffect } from 'react';
 import { auth } from './components/firebase';
 import { useStateValue } from './components/StateProvider';
+import Payment from './components/Payment';
+import { loadStripe } from '@stripe/stripe-js';
+import { CardElement, Elements, useElements, useStripe } from '@stripe/react-stripe-js';
+import Orders from './components/Orders';
+
+const promise = loadStripe("Insert The Stripe Public Key");
 
 function App() {
   const [{ }, dispatch] = useStateValue();
@@ -38,7 +44,9 @@ function App() {
 
         <Routes>
           <Route path='/checkout' element={[<Header />, <Checkout />]} />
+          <Route path='/orders' element={[<Header />, <Orders />]} />
           <Route path='/login' element={[<Login />]} />
+          <Route path='/payment' element={[<Header />, <Elements stripe={promise}><Payment /></Elements>]} />
           <Route path='/' element={[<Header />, <Home />]} />
         </Routes>
       </div>
